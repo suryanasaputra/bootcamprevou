@@ -1,3 +1,39 @@
+/* ── CSS Variables (light / dark) ─────────────────────────────────────── */
+:root {
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --accent: #4f46e5;
+    --accent-h: #4338ca;
+    --error-bg: #fee2e2;
+    --error-txt: #b91c1c;
+    --item-bg: #f8f8ff;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    --over-bg: #fff7ed;
+    --over-border: #f97316;
+    --over-txt: #c2410c;
+}
+
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --border: #334155;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --accent: #818cf8;
+    --accent-h: #6366f1;
+    --error-bg: #450a0a;
+    --error-txt: #fca5a5;
+    --item-bg: #1e293b;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --over-bg: #431407;
+    --over-border: #f97316;
+    --over-txt: #fdba74;
+}
+
+/* ── Reset ────────────────────────────────────────────────────────────── */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,127 +42,357 @@
 
 body {
     font-family: 'Segoe UI', sans-serif;
-    background: #f0f2f5;
-    color: #333;
+    background: var(--bg);
+    color: var(--text);
     padding: 24px;
+    transition: background 0.3s, color 0.3s;
 }
 
+/* ── Container ────────────────────────────────────────────────────────── */
 .container {
-    max-width: 900px;
+    max-width: 960px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
 }
 
-/* Balance */
+/* ── Top bar (balance + theme toggle) ────────────────────────────────── */
+.top-bar {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+}
+
 .balance-box {
-    background: #4f46e5;
-    color: white;
+    flex: 1;
+    background: var(--accent);
+    color: #fff;
     border-radius: 12px;
-    padding: 24px;
+    padding: 20px 24px;
     text-align: center;
 }
 
 .balance-box span {
-    font-size: 14px;
+    font-size: 13px;
     opacity: 0.85;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .balance-box h1 {
-    font-size: 2.4rem;
-    margin-top: 6px;
+    font-size: 2.2rem;
+    margin-top: 4px;
 }
 
-/* Form */
-.form-box {
-    background: white;
+#theme-toggle {
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    padding: 0 18px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#theme-toggle:hover {
+    background: var(--border);
+}
+
+/* ── Spending limit bar ───────────────────────────────────────────────── */
+.limit-bar {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: var(--shadow);
+}
+
+.limit-bar label {
+    font-size: 13px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.limit-input-row {
+    display: flex;
+    gap: 8px;
+}
+
+.limit-input-row input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+}
+
+.limit-input-row input:focus {
+    border-color: var(--accent);
+}
+
+.limit-input-row button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#set-limit-btn {
+    background: var(--accent);
+    color: #fff;
+}
+
+#clear-limit-btn {
+    background: var(--border);
+    color: var(--text);
+}
+
+.limit-warning {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--over-txt);
+}
+
+/* ── Form ─────────────────────────────────────────────────────────────── */
+.form-box {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
 }
 
 .form-box h2,
 .list-box h2,
-.chart-box h2 {
-    margin-bottom: 16px;
-    font-size: 1.1rem;
-    color: #4f46e5;
+.chart-box h2,
+.summary-box h2 {
+    margin-bottom: 14px;
+    font-size: 1rem;
+    color: var(--accent);
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
 }
 
 .form-group {
-    margin-bottom: 14px;
+    flex: 1;
+    min-width: 140px;
 }
 
 .form-group label {
     display: block;
-    font-size: 13px;
-    margin-bottom: 5px;
+    font-size: 12px;
     font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-muted);
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
+    padding: 9px 11px;
+    border: 1px solid var(--border);
     border-radius: 8px;
     font-size: 14px;
+    background: var(--bg);
+    color: var(--text);
     outline: none;
     transition: border 0.2s;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-    border-color: #4f46e5;
+    border-color: var(--accent);
 }
 
-button#add-btn {
+.custom-cat-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.custom-cat-row {
+    display: flex;
+    gap: 8px;
+}
+
+.custom-cat-row input {
+    flex: 1;
+}
+
+#add-cat-btn {
+    padding: 9px 14px;
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+#add-cat-btn:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+#add-btn {
     width: 100%;
     padding: 11px;
-    background: #4f46e5;
-    color: white;
+    background: var(--accent);
+    color: #fff;
     border: none;
     border-radius: 8px;
     font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
 }
 
-button#add-btn:hover {
-    background: #4338ca;
+#add-btn:hover {
+    background: var(--accent-h);
 }
 
 .error {
-    background: #fee2e2;
-    color: #b91c1c;
-    padding: 10px 14px;
+    background: var(--error-bg);
+    color: var(--error-txt);
+    padding: 9px 13px;
     border-radius: 8px;
     font-size: 13px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .hidden {
     display: none;
 }
 
-/* Content row */
+/* ── Controls bar (sort + filter) ────────────────────────────────────── */
+.controls-bar {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 14px 20px;
+    box-shadow: var(--shadow);
+    align-items: flex-end;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.control-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.control-group select,
+.control-group input[type="month"] {
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+}
+
+.control-group select:focus,
+.control-group input:focus {
+    border-color: var(--accent);
+}
+
+#clear-filter-btn {
+    padding: 7px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#clear-filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* ── Monthly summary ──────────────────────────────────────────────────── */
+.summary-box {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+}
+
+.summary-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-total {
+    font-weight: 700;
+    color: var(--accent);
+    margin-left: auto;
+}
+
+.summary-cats {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.summary-cat {
+    font-size: 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 10px;
+    color: var(--text-muted);
+}
+
+/* ── Content row ──────────────────────────────────────────────────────── */
 .content-row {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     align-items: flex-start;
 }
 
-/* Transaction list */
+/* ── Transaction list ─────────────────────────────────────────────────── */
 .list-box {
     flex: 1;
-    background: white;
+    background: var(--surface);
     border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-    max-height: 380px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    max-height: 420px;
     display: flex;
     flex-direction: column;
 }
@@ -145,8 +411,14 @@ button#add-btn:hover {
     padding: 10px 12px;
     border-radius: 8px;
     margin-bottom: 8px;
-    background: #f8f8ff;
-    border-left: 4px solid #4f46e5;
+    background: var(--item-bg);
+    border-left: 4px solid var(--cat-color, var(--accent));
+    transition: background 0.2s;
+}
+
+#transaction-list li.item.over-limit {
+    background: var(--over-bg);
+    border-left-color: var(--over-border);
 }
 
 #transaction-list li.item .info .name {
@@ -156,7 +428,7 @@ button#add-btn:hover {
 
 #transaction-list li.item .info .meta {
     font-size: 12px;
-    color: #888;
+    color: var(--text-muted);
     margin-top: 2px;
 }
 
@@ -168,39 +440,43 @@ button#add-btn:hover {
 
 #transaction-list li.item .amount {
     font-weight: 700;
-    color: #4f46e5;
+    color: var(--accent);
     font-size: 14px;
 }
 
+#transaction-list li.item .amount.over {
+    color: var(--over-txt);
+}
+
 .delete-btn {
-    background: #fee2e2;
-    color: #b91c1c;
+    background: var(--error-bg);
+    color: var(--error-txt);
     border: none;
     border-radius: 6px;
     padding: 4px 10px;
     cursor: pointer;
     font-size: 12px;
-    transition: background 0.2s;
+    transition: opacity 0.2s;
 }
 
 .delete-btn:hover {
-    background: #fca5a5;
+    opacity: 0.75;
 }
 
 .empty-msg {
-    color: #aaa;
+    color: var(--text-muted);
     font-size: 13px;
     text-align: center;
     padding: 20px 0;
 }
 
-/* Chart */
+/* ── Chart ────────────────────────────────────────────────────────────── */
 .chart-box {
     width: 280px;
-    background: white;
+    background: var(--surface);
     border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
     text-align: center;
 }
 
@@ -209,26 +485,26 @@ button#add-btn:hover {
     margin: 0 auto;
 }
 
-/* Category border colors */
-li.item.Food {
-    border-left-color: #f59e0b;
-}
-
-li.item.Transport {
-    border-left-color: #10b981;
-}
-
-li.item.Fun {
-    border-left-color: #ec4899;
-}
-
-/* Responsive */
-@media (max-width: 640px) {
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 680px) {
     .content-row {
         flex-direction: column;
     }
 
     .chart-box {
         width: 100%;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .top-bar {
+        flex-direction: column;
+    }
+
+    #theme-toggle {
+        padding: 12px;
+        text-align: center;
     }
 }

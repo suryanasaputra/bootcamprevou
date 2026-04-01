@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8" />
@@ -11,34 +11,89 @@
 
 <body>
     <div class="container">
-        <div class="balance-box">
-            <span>Total Balance</span>
-            <h1 id="total-balance">Rp 0</h1>
+
+        <!-- Top bar -->
+        <div class="top-bar">
+            <div class="balance-box">
+                <span>Total Balance</span>
+                <h1 id="total-balance">Rp 0</h1>
+            </div>
+            <button id="theme-toggle" title="Toggle dark/light mode">🌙</button>
         </div>
 
+        <!-- Spending limit -->
+        <div class="limit-bar">
+            <label for="spend-limit">Spending Limit (Rp)</label>
+            <div class="limit-input-row">
+                <input type="number" id="spend-limit" placeholder="e.g. 500000" min="0" />
+                <button id="set-limit-btn">Set</button>
+                <button id="clear-limit-btn">Clear</button>
+            </div>
+            <p id="limit-warning" class="limit-warning hidden">⚠ Spending limit exceeded!</p>
+        </div>
+
+        <!-- Add Transaction Form -->
         <div class="form-box">
             <h2>Add Transaction</h2>
             <div id="error-msg" class="error hidden">Please fill in all fields.</div>
-            <div class="form-group">
-                <label for="item-name">Item Name</label>
-                <input type="text" id="item-name" placeholder="e.g. Lunch" />
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="item-name">Item Name</label>
+                    <input type="text" id="item-name" placeholder="e.g. Lunch" />
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount (Rp)</label>
+                    <input type="number" id="amount" placeholder="e.g. 25000" min="1" />
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="">-- Select --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="txn-date">Date</label>
+                    <input type="month" id="txn-month" />
+                </div>
             </div>
-            <div class="form-group">
-                <label for="amount">Amount (Rp)</label>
-                <input type="number" id="amount" placeholder="e.g. 25000" min="1" />
-            </div>
-            <div class="form-group">
-                <label for="category">Category</label>
-                <select id="category">
-                    <option value="">-- Select Category --</option>
-                    <option value="Food">Food</option>
-                    <option value="Transport">Transport</option>
-                    <option value="Fun">Fun</option>
-                </select>
+            <div class="form-row">
+                <div class="form-group custom-cat-group">
+                    <label for="new-category">Add Custom Category</label>
+                    <div class="custom-cat-row">
+                        <input type="text" id="new-category" placeholder="e.g. Health" />
+                        <button id="add-cat-btn">+ Add</button>
+                    </div>
+                </div>
             </div>
             <button id="add-btn">Add Transaction</button>
         </div>
 
+        <!-- Controls: sort + month filter -->
+        <div class="controls-bar">
+            <div class="control-group">
+                <label for="sort-select">Sort by</label>
+                <select id="sort-select">
+                    <option value="date-desc">Date (newest)</option>
+                    <option value="date-asc">Date (oldest)</option>
+                    <option value="amount-desc">Amount (high → low)</option>
+                    <option value="amount-asc">Amount (low → high)</option>
+                    <option value="category">Category (A–Z)</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="filter-month">Month</label>
+                <input type="month" id="filter-month" />
+                <button id="clear-filter-btn">All</button>
+            </div>
+        </div>
+
+        <!-- Monthly Summary -->
+        <div id="monthly-summary" class="summary-box hidden">
+            <h2>Monthly Summary</h2>
+            <div id="summary-content"></div>
+        </div>
+
+        <!-- List + Chart -->
         <div class="content-row">
             <div class="list-box">
                 <h2>Transaction List</h2>
@@ -53,6 +108,7 @@
                 <p id="chart-empty" class="empty-msg">No data to display.</p>
             </div>
         </div>
+
     </div>
 
     <script src="js/app.js"></script>
