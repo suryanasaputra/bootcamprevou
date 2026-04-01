@@ -1,74 +1,90 @@
 # Expense Tracker
 
-Aplikasi pencatat pengeluaran berbasis web menggunakan HTML, CSS, JavaScript, jQuery, dan Chart.js.
-Data tersimpan secara otomatis di browser menggunakan localStorage sehingga tidak hilang saat halaman di-refresh.
+Aplikasi pencatat pengeluaran berbasis web menggunakan HTML, CSS, dan Vanilla JavaScript.
+Data tersimpan otomatis di browser via localStorage — tidak butuh server atau instalasi apapun.
 
 ---
 
-## Spesifikasi
+## Spesifikasi Teknis
 
-### Teknologi
-| Teknologi    | Versi / Sumber                              |
-|--------------|---------------------------------------------|
-| HTML5        | Struktur halaman                            |
-| CSS3         | Styling & layout responsif                  |
-| JavaScript   | Logika aplikasi                             |
-| jQuery       | 3.7.1 (CDN)                                 |
-| Chart.js     | Latest (CDN jsDelivr)                       |
-| localStorage | Browser API bawaan, tanpa backend           |
+### TC-1: Technology Stack
+| Teknologi      | Keterangan                                      |
+|----------------|-------------------------------------------------|
+| HTML5          | Struktur halaman                                |
+| CSS3           | Styling & layout responsif                      |
+| Vanilla JS     | Logika aplikasi (tanpa framework/library JS)    |
+| Chart.js       | Pie chart (CDN jsDelivr, hanya untuk rendering) |
+| localStorage   | Penyimpanan data di sisi browser                |
 
-### Struktur File
+> Tidak menggunakan jQuery, React, Vue, atau framework JS lainnya.
+> Tidak memerlukan backend server.
+
+### TC-2: Data Storage
+- Seluruh data disimpan di `localStorage` browser dengan key `transactions`
+- Data bersifat client-side only, tidak dikirim ke server manapun
+- Data tetap ada setelah halaman di-refresh atau browser ditutup
+
+### TC-3: Browser Compatibility
+- Berjalan di semua browser modern: Chrome, Firefox, Edge, Safari
+- Dapat digunakan sebagai standalone web app (buka langsung file HTML)
+
+---
+
+## Struktur Folder
+
 ```
 latihan1/
-├── index.html   # Struktur halaman
-├── style.css    # Tampilan & layout
-├── app.js       # Logika aplikasi
-└── README.md    # Dokumentasi ini
+├── index.html       # Struktur halaman utama
+├── css/
+│   └── style.css    # Satu-satunya file CSS
+├── js/
+│   └── app.js       # Satu-satunya file JavaScript
+└── README.md        # Dokumentasi ini
 ```
 
-### Fitur
+> Sesuai aturan folder: hanya 1 file CSS di dalam `css/` dan 1 file JS di dalam `js/`.
 
-#### 1. Input Form
-- Field: Item Name, Amount (Rp), Category
-- Kategori tersedia: Food, Transport, Fun
-- Validasi: semua field wajib diisi sebelum submit
-- Pesan error muncul jika ada field yang kosong
+---
+
+## Fitur Aplikasi
+
+### 1. Input Form
+- Field: Item Name, Amount (Rp), Category (Food / Transport / Fun)
+- Validasi: semua field wajib diisi, amount harus lebih dari 0
+- Pesan error muncul jika ada field yang kosong atau tidak valid
 - Form direset otomatis setelah transaksi berhasil ditambahkan
 
-#### 2. Transaction List
-- Menampilkan daftar semua transaksi yang telah ditambahkan
+### 2. Transaction List
+- Daftar scrollable semua transaksi yang telah ditambahkan
 - Setiap item menampilkan: nama, kategori, dan jumlah (format Rupiah)
 - Warna border kiri berbeda per kategori:
-  - Food → kuning (`#f59e0b`)
-  - Transport → hijau (`#10b981`)
-  - Fun → pink (`#ec4899`)
-- Daftar bisa di-scroll jika item melebihi tinggi kotak
-- Setiap item memiliki tombol Delete untuk menghapus
+  - Food → kuning `#f59e0b`
+  - Transport → hijau `#10b981`
+  - Fun → pink `#ec4899`
+- Tombol Delete pada setiap item untuk menghapus transaksi
 
-#### 3. Total Balance
+### 3. Total Balance
 - Ditampilkan di bagian paling atas halaman
-- Menghitung total seluruh pengeluaran yang tercatat
+- Menjumlahkan seluruh pengeluaran yang tercatat
 - Diperbarui otomatis setiap kali transaksi ditambah atau dihapus
-- Format angka menggunakan locale Indonesia (contoh: Rp 125.000)
+- Format angka: locale Indonesia (contoh: `Rp 125.000`)
 
-#### 4. Visual Chart (Pie Chart)
-- Menampilkan distribusi pengeluaran per kategori dalam bentuk pie chart
-- Menggunakan library Chart.js
-- Warna slice sesuai warna kategori
+### 4. Visual Chart
+- Pie chart menampilkan distribusi pengeluaran per kategori
+- Warna slice sesuai warna kategori masing-masing
 - Tooltip menampilkan jumlah dalam format Rupiah
-- Chart diperbarui otomatis setiap ada perubahan data
+- Diperbarui otomatis setiap ada perubahan data
 - Jika belum ada data, menampilkan pesan "No data to display"
 
-#### 5. Local Storage
-- Data transaksi disimpan ke `localStorage` dengan key `transactions`
-- Data dimuat kembali saat halaman pertama kali dibuka
-- Setiap perubahan (tambah / hapus) langsung disimpan otomatis
+### 5. Local Storage
+- Data dimuat dari localStorage saat halaman pertama dibuka
+- Setiap perubahan (tambah/hapus) langsung disimpan otomatis
 
 ---
 
 ## Struktur Data
 
-Setiap transaksi disimpan sebagai objek JSON:
+Setiap transaksi disimpan sebagai objek JSON dalam array:
 
 ```json
 {
@@ -79,12 +95,12 @@ Setiap transaksi disimpan sebagai objek JSON:
 }
 ```
 
-| Field      | Tipe   | Keterangan                              |
-|------------|--------|-----------------------------------------|
-| `id`       | number | Timestamp `Date.now()` sebagai ID unik  |
-| `name`     | string | Nama item transaksi                     |
-| `amount`   | number | Jumlah pengeluaran dalam Rupiah         |
-| `category` | string | Salah satu dari: Food, Transport, Fun   |
+| Field      | Tipe   | Keterangan                             |
+|------------|--------|----------------------------------------|
+| `id`       | number | `Date.now()` sebagai ID unik           |
+| `name`     | string | Nama item transaksi                    |
+| `amount`   | number | Jumlah pengeluaran dalam Rupiah        |
+| `category` | string | Salah satu dari: Food, Transport, Fun  |
 
 ---
 
@@ -93,11 +109,12 @@ Setiap transaksi disimpan sebagai objek JSON:
 ### Saat Halaman Dibuka
 ```
 Buka index.html
-  └─> app.js dijalankan (jQuery DOM ready)
+  └─> js/app.js dijalankan (IIFE, DOMContentLoaded sudah siap)
         └─> Baca localStorage['transactions']
               ├─> Ada data  → parse JSON → isi array transactions
               └─> Tidak ada → gunakan array kosong []
                     └─> render()
+                          ├─> save()           → simpan ke localStorage
                           ├─> renderList()     → tampilkan daftar transaksi
                           ├─> updateBalance()  → hitung & tampilkan total
                           └─> updateChart()    → gambar pie chart
@@ -105,16 +122,16 @@ Buka index.html
 
 ### Saat Menambah Transaksi
 ```
-User klik tombol "Add Transaction"
-  └─> Ambil nilai: item-name, amount, category
-        ├─> Ada field kosong / amount <= 0
-        │     └─> Tampilkan pesan error → STOP
+User klik "Add Transaction"
+  └─> Baca nilai: item-name, amount, category
+        ├─> Field kosong / amount <= 0
+        │     └─> Tampilkan error → STOP
         └─> Semua valid
-              └─> Sembunyikan pesan error
+              └─> Sembunyikan error
                     └─> Push objek baru ke array transactions
-                          └─> Reset form (kosongkan semua field)
+                          └─> Reset semua field form
                                 └─> render()
-                                      ├─> save() → simpan ke localStorage
+                                      ├─> save()
                                       ├─> renderList()
                                       ├─> updateBalance()
                                       └─> updateChart()
@@ -122,24 +139,35 @@ User klik tombol "Add Transaction"
 
 ### Saat Menghapus Transaksi
 ```
-User klik tombol "Delete" pada salah satu item
-  └─> Ambil data-id dari tombol yang diklik
-        └─> Filter array transactions (buang item dengan id tersebut)
-              └─> render()
-                    ├─> save() → perbarui localStorage
-                    ├─> renderList()
-                    ├─> updateBalance()
-                    └─> updateChart()
+User klik "Delete" pada item
+  └─> Event delegation pada #transaction-list
+        └─> Ambil data-id dari tombol
+              └─> Filter array (buang item dengan id tersebut)
+                    └─> render()
+                          ├─> save()
+                          ├─> renderList()
+                          ├─> updateBalance()
+                          └─> updateChart()
 ```
+
+---
+
+## Non-Functional Requirements
+
+| NFR | Pemenuhan |
+|-----|-----------|
+| NFR-1: Simplicity | Antarmuka bersih, tidak ada setup, tidak ada test runner |
+| NFR-2: Performance | Tidak ada network request untuk data, semua operasi sinkron dan cepat |
+| NFR-3: Visual Design | Hierarki visual jelas, tipografi readable, warna konsisten per kategori |
 
 ---
 
 ## Cara Menjalankan
 
-Tidak memerlukan instalasi atau server. Cukup buka file langsung di browser:
+Tidak perlu instalasi atau server. Buka langsung di browser:
 
 ```
-latihan1/index.html  →  buka dengan double-click atau drag ke browser
+Buka file: latihan1/index.html
 ```
 
-Membutuhkan koneksi internet untuk memuat jQuery dan Chart.js dari CDN.
+Membutuhkan koneksi internet hanya untuk memuat Chart.js dari CDN.
