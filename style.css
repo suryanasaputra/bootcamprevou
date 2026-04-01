@@ -1,0 +1,228 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    padding: 24px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.balance-box {
+    background: #4f46e5;
+    color: white;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+}
+
+.balance-box span {
+    font-size: 14px;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.balance-box h1 {
+    font-size: 2.4rem;
+    margin-top: 6px;
+}
+
+.form-box {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+.form-box h2,
+.list-box h2,
+.chart-box h2 {
+    margin-bottom: 16px;
+    font-size: 1.1rem;
+    color: #4f46e5;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #4f46e5;
+}
+
+button#add-btn {
+    width: 100%;
+    padding: 11px;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button#add-btn:hover {
+    background: #4338ca;
+}
+
+.error {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+.hidden {
+    display: none;
+}
+
+.content-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.list-box {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    max-height: 380px;
+    display: flex;
+    flex-direction: column;
+}
+
+#transaction-list {
+    list-style: none;
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 4px;
+}
+
+#transaction-list li.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: #f8f8ff;
+    border-left: 4px solid #4f46e5;
+}
+
+#transaction-list li.item .info .name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#transaction-list li.item .info .meta {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+}
+
+#transaction-list li.item .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#transaction-list li.item .amount {
+    font-weight: 700;
+    color: #4f46e5;
+    font-size: 14px;
+}
+
+.delete-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.delete-btn:hover {
+    background: #fca5a5;
+}
+
+.empty-msg {
+    color: #aaa;
+    font-size: 13px;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.chart-box {
+    width: 280px;
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    text-align: center;
+}
+
+#pie-chart {
+    max-width: 220px;
+    margin: 0 auto;
+}
+
+/* Category border colors */
+li.item.Food {
+    border-left-color: #f59e0b;
+}
+
+li.item.Transport {
+    border-left-color: #10b981;
+}
+
+li.item.Fun {
+    border-left-color: #ec4899;
+}
+
+@media (max-width: 640px) {
+    .content-row {
+        flex-direction: column;
+    }
+
+    .chart-box {
+        width: 100%;
+    }
+}
